@@ -37,18 +37,18 @@ The better the data aligns with the assumptions, the higher the quality of the c
 Bayes’ theorem states the following relationship, given class variable $y$ and dependent feature vector $x_1$ through $x_n$:
 $$P(y | x_1, x_2, \ldots, x_n) = \frac{P(y)P(x_1, x_2, \ldots, x_n | y)}{P(x_1, x_2, \ldots, x_n)}.$$
 >_Example_:
->$$P(\text{ if won } | \text{ if enterprise } \& \text{ if using trade desk }) =$$
->$$ = \frac{P(\text{ if won })P(\text{ if enterprise } \& \text{ if using trade desk } | \text{ if won})}{P(\text{ if enterprise } \& \text{ if using trade desk })}$$
+>$$P(\text{ if won } | \text{ if enterprise } \text{and} \text{ if using trade desk }) =$$
+>$$ = \frac{P(\text{ if won })P(\text{ if enterprise } \text{and} \text{ if using trade desk } | \text{ if won})}{P(\text{ if enterprise } \text{and} \text{ if using trade desk })}$$
 
 Using the naive <b>conditional independence assumption</b> that
 $$P(x_1, x_2, \ldots, x_n | y) = P(x_1 | y)P(x_2 | y)\ldots P(x_n | y),$$
 relationship is simplified to
 $$P(y | x_1, x_2, \ldots, x_n) = \frac{P(x_1 | y)P(x_2 | y)\ldots P(x_n | y) P(y)}{P(x_1,x_2,\ldots,x_n)}.$$
 >_Example_:
->$$P(\text{ if won } | \text{ if enterprise } \& \text{ if using trade desk }) =$$
->$$ = \frac{P(\text{ if won })P(\text{ if enterprise }| \text{ if won }) P(\text{ if using trade desk } | \text{ if won })}{P(\text{ if enterprise } \& \text{ if using trade desk })},$$
->$$P(\text{ if lost } | \text{ if enterprise } \& \text{ if using trade desk }) =$$
->$$ = \frac{P(\text{ if lost })P(\text{ if enterprise }| \text{ if lost }) P(\text{ if using trade desk } | \text{ if lost })}{P(\text{ if enterprise } \& \text{ if using trade desk })}.$$
+>$$P(\text{ if won } | \text{ if enterprise } \text{and} \text{ if using trade desk }) =$$
+>$$ = \frac{P(\text{ if won })P(\text{ if enterprise }| \text{ if won }) P(\text{ if using trade desk } | \text{ if won })}{P(\text{ if enterprise } \text{and} \text{ if using trade desk })},$$
+>$$P(\text{ if lost } | \text{ if enterprise } \text{and} \text{ if using trade desk }) =$$
+>$$ = \frac{P(\text{ if lost })P(\text{ if enterprise }| \text{ if lost }) P(\text{ if using trade desk } | \text{ if lost })}{P(\text{ if enterprise } \text{and} \text{ if using trade desk })}.$$
 
 Since $P(x_1,\ldots,x_n)$ is constant given the input, we can use the following classification rule:
 $$\hat y = \argmax_y P(y)\prod_{i=1}^n P(x_i | y),$$
@@ -63,14 +63,14 @@ The probability of category $t$ in feature $i$ given class $c$ is The estimated 
 $$\hat P(x_i = t | y = c) = \frac{N_{tic}}{N_c},$$
 where $N_{tic} = |\{j \in J | x_{ij} = t, y_j = c\}|$ is the number of times category $t$ appears in the samples $x_i$, which belong to class $c$, $N_{c} = |\{j \in J | y_j = c\}|$ is the number of samples with class $c$.
 >_Example_:
->$$\hat P(\text{ if using trade desk } | \text{ if won }) = \frac{\text{count}(\text{ if using trade desk } \& \text{ if won })}{\text{count}(\text{ if won })}.$$
+>$$\hat P(\text{ if using trade desk } | \text{ if won }) = \frac{\text{count}(\text{ if using trade desk } \text{and} \text{ if won })}{\text{count}(\text{ if won })}.$$
 
 
 Additionally model performance could be improved by adding a smoothing parameter $\alpha$:
 $$\tilde P(x_i = t | y = c; \alpha) = \frac{N_{tic} + \alpha}{N_c + \alpha n_{i}},$$
 where $n_{i}$ is the number of available categories of feature $i$.
 >_Example_:
->$$\hat P(\text{ if using trade desk } | \text{ if won }) = \frac{\text{count}(\text{ if using trade desk } \& \text{ if won }) + 2}{\text{count}(\text{ if won }) + 4}.$$
+>$$\hat P(\text{ if using trade desk } | \text{ if won }) = \frac{\text{count}(\text{ if using trade desk }  \text{and} \text{ if won }) + 2}{\text{count}(\text{ if won }) + 4}.$$
 
 >_Note_:
 >The smoothing parameter $\alpha$, also known as Laplace smoothing or add-one smoothing, is used in categorical Naive Bayes classification to address the issue of zero probabilities. In categorical Naive Bayes, when a feature-label combination is unseen in the training data, the probability estimate becomes zero, which can cause problems in further likelihood estimation.
